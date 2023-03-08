@@ -32,6 +32,7 @@ void add2(double a[N])
         sum1+=a[i];
     sum=sum1+sum2+sum3+sum4+sum5;
 }
+
 int main()
 {
     long long head,tail,freq; //timers
