@@ -1,10 +1,10 @@
 #include<iostream>
 #include<windows.h>
 #include<stdlib.h>
-#pragma GCC optimize(3)
+//#pragma GCC optimize(3)
 using namespace std;
 
-const long long int N=100000000;
+const long long int N=200000000;
 
 double a[N],sum,sum1,sum2,sum3,sum4,sum5;
 void init()
@@ -36,14 +36,22 @@ void add2(double a[N])
 int main()
 {
     long long head,tail,freq; //timers
+    long double tmp=0.0;
     init();
     //记时间
     QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
+    for(int k=0;k<100;k++)
+    {
     //start time
-    QueryPerformanceCounter((LARGE_INTEGER*)&head);
-    add1(a);
+       QueryPerformanceCounter((LARGE_INTEGER*)&head);
+       add1(a);
     //end time
-    QueryPerformanceCounter((LARGE_INTEGER*)&tail);
-    cout<<"平凡算法用时:"<<(tail-head)*1000.0/freq<<"ms"<<endl;
+       QueryPerformanceCounter((LARGE_INTEGER*)&tail);
+       sum=0;
+       tmp+=(tail-head)*1000.0/freq;
+
+    }
+
+    cout<<"算法用时:"<<tmp/100<<"ms"<<endl;
     system("pause");
 }
