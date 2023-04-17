@@ -44,9 +44,13 @@ void elimination() {
                             }
                         }
                         if (eliminer[eline[j].num].none()) {
-                            eliminer[eline[j].num] = eline[j].bit;
-                            eline[j].ifUprade = true;
-                            break;//下一个被消元行
+                            if (eline[j].num >= i - 4 && eline[j].num <= i)
+                            {
+                                eliminer[eline[j].num] = eline[j].bit;
+                                eline[j].ifUprade = true;
+                                break;//下一个被消元行
+                            }
+                            break;
                         }
                     }
                 }

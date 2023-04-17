@@ -90,11 +90,15 @@ void elimination() {
                             }
                         }
                         if (eliminer_ifnull(eline[j].num)) {
-                            for (int ss = eline[j].num / 8; ss >= 0; ss--)  //赋值过来
-                                eliminer[eline[j].num][ss] = eline[j].bit[ss];
-                            //eliminer[eline[j].num] ^= eline[j].bit;
-                            eline[j].ifUprade = true;
-                            break;//下一个被消元行
+                            if (eline[j].num >= i - 4 && eline[j].num <= i)
+                            {
+                                for (int ss = eline[j].num / 8; ss >= 0; ss--)  //赋值过来
+                                    eliminer[eline[j].num][ss] = eline[j].bit[ss];
+                                //eliminer[eline[j].num] ^= eline[j].bit;
+                                eline[j].ifUprade = true;
+                                break;//下一个被消元行
+                            }
+                            break;
                         }
                     }
                 }

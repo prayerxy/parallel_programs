@@ -6,8 +6,8 @@
 //#include<vector>
 //#include<bitset>   //我们用stl内置位图表示矩阵的每一行，方便异或运算
 //using namespace std;
-//#define E_LineN 453 //被消元行数 line number
-//#define RN 2362  //矩阵列数 row number
+//#define E_LineN 8 //被消元行数 line number
+//#define RN 130  //矩阵列数 row number
 //
 //
 //bitset<RN> eliminer[RN]; //因为被消元行有NUM列，所以消元子最终时最多NUM个
@@ -44,9 +44,14 @@
 //                            }
 //                        }
 //                        if (eliminer[eline[j].num].none()) {
-//                            eliminer[eline[j].num] = eline[j].bit;
-//                            eline[j].ifUprade = true;
-//                            break;//下一个被消元行
+//                            if (eline[j].num >= i - 4 && eline[j].num <= i)
+//                            {
+//                                eliminer[eline[j].num] = eline[j].bit;
+//                                eline[j].ifUprade = true;
+//                                break;//下一个被消元行
+//                            }
+//                            break;
+//
 //                        }
 //                    }
 //                }

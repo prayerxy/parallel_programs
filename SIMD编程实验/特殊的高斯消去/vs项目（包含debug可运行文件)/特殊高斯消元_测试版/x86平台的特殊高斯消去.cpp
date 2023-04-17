@@ -8,8 +8,8 @@
 #include<immintrin.h>
 
 using namespace std;
-#define E_LineN 756 //被消元行数 line number
-#define RN 85401//矩阵列数 row number
+#define E_LineN 8 //被消元行数 line number
+#define RN 130//矩阵列数 row number
 
 
 char** eliminer = new char* [RN]; //因为被消元行有RN列，所以消元子最终时最多RN个
@@ -110,11 +110,16 @@ void elimination() {
                             }
                         }
                         if (eliminer_ifnull(eline[j].num)) {
-                            for (int ss = eline[j].num / 8; ss >= 0; ss--)  //赋值过来
-                                eliminer[eline[j].num][ss] = eline[j].bit[ss];
-                            //eliminer[eline[j].num] ^= eline[j].bit;
-                            eline[j].ifUprade = true;
-                            break;//下一个被消元行
+                            if (eline[j].num >= i - 4 && eline[j].num <= i)
+                            {
+                                for (int ss = eline[j].num / 8; ss >= 0; ss--)  //赋值过来
+                                    eliminer[eline[j].num][ss] = eline[j].bit[ss];
+                                //eliminer[eline[j].num] ^= eline[j].bit;
+                                eline[j].ifUprade = true;
+                                break;//下一个被消元行
+                            }
+                            break;
+
                         }
                     }
                 }
