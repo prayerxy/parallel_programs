@@ -207,6 +207,7 @@ int main() {
             }
             if (flagUpgrade == 0)
                 continue;
+            //需要gpu对剩余的被消元行完成消去操作，启动核函数
             eliminate2_kernel << <32, 512 >> > (eliminer, eline, i, flagUpgrade, nextstart);
 
         }
