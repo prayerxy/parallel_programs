@@ -7,21 +7,21 @@
 
 
 using namespace std;
-#define E_LineN 14291 //±»ÏûÔªĞĞÊı line number
-#define RN 37960//¾ØÕóÁĞÊı row number
+#define E_LineN 14291 //è¢«æ¶ˆå…ƒè¡Œæ•° line number
+#define RN 37960//çŸ©é˜µåˆ—æ•° row number
 
 
-char** eliminer = new char* [RN]; //ÒòÎª±»ÏûÔªĞĞÓĞRNÁĞ£¬ËùÒÔÏûÔª×Ó×îÖÕÊ±×î¶àRN¸ö
+char** eliminer = new char* [RN]; //å› ä¸ºè¢«æ¶ˆå…ƒè¡Œæœ‰RNåˆ—ï¼Œæ‰€ä»¥æ¶ˆå…ƒå­æœ€ç»ˆæ—¶æœ€å¤šRNä¸ª
 
-struct line {  //¶¨ÒåÏûÔªĞĞ,Ôö¼ÓÉı¸ñ£¬Ê×¸ö1µÄ±äÁ¿£¬ÒÔ±ãµÈÏÂÏûÔª´¦Àí
-    //ÊÇ·ñÉı¸ñ
+struct line {  //å®šä¹‰æ¶ˆå…ƒè¡Œ,å¢åŠ å‡æ ¼ï¼Œé¦–ä¸ª1çš„å˜é‡ï¼Œä»¥ä¾¿ç­‰ä¸‹æ¶ˆå…ƒå¤„ç†
+    //æ˜¯å¦å‡æ ¼
     bool ifUprade;
-    //Ê×¸ö1µÄÎ»ÖÃ
+    //é¦–ä¸ª1çš„ä½ç½®
     int num;
-    //Î»Í¼±íÊ¾Ò»ĞĞ
+    //ä½å›¾è¡¨ç¤ºä¸€è¡Œ
     char* bit = new char[RN / 8 + 1];
 };
-line eline[E_LineN];//±»ÏûÔªĞĞ
+line eline[E_LineN];//è¢«æ¶ˆå…ƒè¡Œ
 
 void init() {
     for (int i = 0; i < RN; i++)
@@ -35,10 +35,10 @@ void init() {
             eliminer[i][j] = 0;
     }
 }
-bool eline_ifnull(int i) { //µÚiĞĞ
+bool eline_ifnull(int i) { //ç¬¬iè¡Œ
     bool flag = true;
     for (int j = RN / 8; j >= 0; j--) {
-        if (!eline[i].bit[j] == 0)  //Ö»ÒªÓĞÒ»¸ö²»Îª¿Õ£¬¾Íreturn false;
+        if (!eline[i].bit[j] == 0)  //åªè¦æœ‰ä¸€ä¸ªä¸ä¸ºç©ºï¼Œå°±return false;
         {
             flag = false;
             return flag;
@@ -47,27 +47,27 @@ bool eline_ifnull(int i) { //µÚiĞĞ
     return flag;
 }
 bool eliminer_ifnull(int i) {
-    if (eliminer[i][i / 8] == 0)  //ÏûÔª×ÓµÚiĞĞµÄµÚiÎ»ÖÃÒ»¶¨ÓĞ1£¬Èç¹ûÃ»ÓĞËµÃ÷Îª¿Õ
+    if (eliminer[i][i / 8] == 0)  //æ¶ˆå…ƒå­ç¬¬iè¡Œçš„ç¬¬iä½ç½®ä¸€å®šæœ‰1ï¼Œå¦‚æœæ²¡æœ‰è¯´æ˜ä¸ºç©º
         return true;
     return false;
 }
-int nextstart = 0;
-int flagUpgrade = 0;  //È«¾Ö±äÁ¿£¬²»ÄÜ×÷ÎªÏß³Ìº¯Êı¾Ö²¿±äÁ¿
+int nextstart = 0; //æ¶ˆå…ƒå­ä¸ºç©ºåˆ™è¿›è¡Œå‡æ ¼æ“ä½œï¼Œæ­¤å˜é‡æ˜¯å‡æ ¼å®Œï¼Œå¯¹å…¶ä½™è¢«æ¶ˆå…ƒè¡Œæ¶ˆå…ƒçš„é¦–ä¸ªè¡Œä¸‹æ ‡
+int flagUpgrade = 0;  //å…¨å±€å˜é‡ï¼Œä¸èƒ½ä½œä¸ºçº¿ç¨‹å‡½æ•°å±€éƒ¨å˜é‡
 void elimination() {
-    for (int i = RN - 1; i >= 0; i--) { //ÏûÔª×Ó
+    for (int i = RN - 1; i >= 0; i--) { //æ¶ˆå…ƒå­
         if (!eliminer_ifnull(i)) {
-            for (int j = 0; j < E_LineN; j++) { //¶ÔµÚj¸ö±»ÏûÔªĞĞ½øĞĞÏûÔª
+            for (int j = 0; j < E_LineN; j++) { //å¯¹ç¬¬jä¸ªè¢«æ¶ˆå…ƒè¡Œè¿›è¡Œæ¶ˆå…ƒ
                 if (eline[j].num == i) {
                     int ss = 0;
-                    for (ss; ss <= i / 8; ss++)  //µÚi/8¸ö¿ÉÄÜ¶Ô²»ĞèÒª²Ù×÷µÄÎ»½øĞĞÁËÒì»ò
+                    for (ss; ss <= i / 8; ss++)  //ç¬¬i/8ä¸ªå¯èƒ½å¯¹ä¸éœ€è¦æ“ä½œçš„ä½è¿›è¡Œäº†å¼‚æˆ–
                         eline[j].bit[ss] ^= eliminer[i][ss];
                     if (eline_ifnull(j)) {
                         eline[j].ifUprade = true;
                         eline[j].num = -2;
                     }
-                    else {//ÖØÖÃnum
-                        for (int n = eline[j].num; n >= 0; n--) {//ÕÒµ½Ê×¸ö1
-                            if (eline[j].bit[n / 8] & (1 << (n % 8))) {  //n%8Îª0-7µÄÎ»ÖÃ£¬n/8ÎªcharµÄÎ»ÖÃ
+                    else {//é‡ç½®num
+                        for (int n = eline[j].num; n >= 0; n--) {//æ‰¾åˆ°é¦–ä¸ª1
+                            if (eline[j].bit[n / 8] & (1 << (n % 8))) {  //n%8ä¸º0-7çš„ä½ç½®ï¼Œn/8ä¸ºcharçš„ä½ç½®
                                 eline[j].num = n;
                                 break;
                             }
@@ -82,11 +82,11 @@ void elimination() {
 
             for (int j = 0; j < E_LineN; j++) {
                 if (eline[j].num == i) {
-                    for (int ss = eline[j].num / 8; ss >= 0; ss--)  //¸³Öµ¹ıÀ´
+                    for (int ss = eline[j].num / 8; ss >= 0; ss--)  //èµ‹å€¼è¿‡æ¥
                         eliminer[eline[j].num][ss] = eline[j].bit[ss];
                     eline[j].ifUprade = true;
                     flagUpgrade = 1;
-                    nextstart = j;//Ö®Ç°µÄ±»ÏûÔªĞĞµÄÊ×Î»²»µÈÓÚi,²»ÓÃÏûÔª
+                    nextstart = j;//ä¹‹å‰çš„è¢«æ¶ˆå…ƒè¡Œçš„é¦–ä½ä¸ç­‰äºi,ä¸ç”¨æ¶ˆå…ƒ
                     eline[j].num = -2;
                     break;
                 }
@@ -98,15 +98,15 @@ void elimination() {
             for (int j = newid; j < E_LineN; j++) {
                 if (eline[j].num == i) {
                     int ss = 0;
-                    for (ss; ss <= i / 8; ss++)  //µÚi/8¸ö¿ÉÄÜ¶Ô²»ĞèÒª²Ù×÷µÄÎ»½øĞĞÁËÒì»ò
+                    for (ss; ss <= i / 8; ss++)  //ç¬¬i/8ä¸ªå¯èƒ½å¯¹ä¸éœ€è¦æ“ä½œçš„ä½è¿›è¡Œäº†å¼‚æˆ–
                         eline[j].bit[ss] ^= eliminer[i][ss];
                     if (eline_ifnull(j)) {
                         eline[j].ifUprade = true;
                         eline[j].num = -2;
                     }
-                    else {//ÖØÖÃnum
-                        for (int n = eline[j].num; n >= 0; n--) {//ÕÒµ½Ê×¸ö1
-                            if (eline[j].bit[n / 8] & (1 << (n % 8))) {  //n%8Îª0-7µÄÎ»ÖÃ£¬n/8ÎªcharµÄÎ»ÖÃ
+                    else {//é‡ç½®num
+                        for (int n = eline[j].num; n >= 0; n--) {//æ‰¾åˆ°é¦–ä¸ª1
+                            if (eline[j].bit[n / 8] & (1 << (n % 8))) {  //n%8ä¸º0-7çš„ä½ç½®ï¼Œn/8ä¸ºcharçš„ä½ç½®
                                 eline[j].num = n;
                                 break;
                             }
@@ -120,41 +120,41 @@ void elimination() {
 }
 int main() {
     init();
-    //ÏûÔª×Ó¶ÁÈë
+    //æ¶ˆå…ƒå­è¯»å…¥
     ifstream file_eliminer;
-    file_eliminer.open("ÏûÔª×Ó.txt", ios_base::in);
+    file_eliminer.open("æ¶ˆå…ƒå­.txt", ios_base::in);
     string s1;
     if (!file_eliminer.is_open())
-        cout << " ´ò¿ªÊ§°Ü";
-    while (getline(file_eliminer, s1)) { //ÖğĞĞ¶ÁÈë
-        stringstream st;//´Ó×Ö·û´®×ªµ½Êı×Ö
+        cout << " æ‰“å¼€å¤±è´¥";
+    while (getline(file_eliminer, s1)) { //é€è¡Œè¯»å…¥
+        stringstream st;//ä»å­—ç¬¦ä¸²è½¬åˆ°æ•°å­—
         st << s1;
         int tmp;
-        int row;//ÏûÔª×ÓµÄĞĞÊıÓëÆäµÚÒ»¸ö1µÄÎ»ÖÃÏàµÈ
+        int row;//æ¶ˆå…ƒå­çš„è¡Œæ•°ä¸å…¶ç¬¬ä¸€ä¸ª1çš„ä½ç½®ç›¸ç­‰
         bool first = true;
         while (st >> tmp) {
             if (first) {
                 row = tmp;
                 first = false;
             }
-            int i = tmp / 8; //ÕâĞĞµÄµÚ¼¸¸öcharÖĞ
-            int j = tmp % 8;//ÔÚÕâ¸öcharµÄµÚ¼¸¸öÎ»ÖÃÉÏ
+            int i = tmp / 8; //è¿™è¡Œçš„ç¬¬å‡ ä¸ªcharä¸­
+            int j = tmp % 8;//åœ¨è¿™ä¸ªcharçš„ç¬¬å‡ ä¸ªä½ç½®ä¸Š
             eliminer[row][i] |= (1 << j);
         }
     }
     file_eliminer.close();
-    //±»ÏûÔªĞĞµÄ¶ÁÈë
+    //è¢«æ¶ˆå…ƒè¡Œçš„è¯»å…¥
     ifstream file_eline;
-    file_eline.open("±»ÏûÔªĞĞ.txt", ios_base::in);
+    file_eline.open("è¢«æ¶ˆå…ƒè¡Œ.txt", ios_base::in);
     string s2;
     if (!file_eline.is_open())
-        cout << " ´ò¿ªÊ§°Ü";
-    int x = 0;//±»ÏûÔªĞĞµÄÏÂ±ê
-    while (getline(file_eline, s2)) { //ÖğĞĞ¶ÁÈë
-        stringstream st;//´Ó×Ö·û´®×ªµ½Êı×Ö
+        cout << " æ‰“å¼€å¤±è´¥";
+    int x = 0;//è¢«æ¶ˆå…ƒè¡Œçš„ä¸‹æ ‡
+    while (getline(file_eline, s2)) { //é€è¡Œè¯»å…¥
+        stringstream st;//ä»å­—ç¬¦ä¸²è½¬åˆ°æ•°å­—
         st << s2;
         int tmp;
-        bool first = true; //Òª¼ÇÂ¼±»ÏûÔªĞĞµÄÊ×1µÄÎ»ÖÃ
+        bool first = true; //è¦è®°å½•è¢«æ¶ˆå…ƒè¡Œçš„é¦–1çš„ä½ç½®
         while (st >> tmp) {
             if (first) {
                 eline[x].num = tmp;
@@ -168,17 +168,17 @@ int main() {
     }
     file_eline.close();
     long long head, tail, freq; //timers
-    //¼ÇÊ±¼ä
+    //è®°æ—¶é—´
     QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
     //start time
     QueryPerformanceCounter((LARGE_INTEGER*)&head);
     elimination();
     //end time
     QueryPerformanceCounter((LARGE_INTEGER*)&tail);
-    cout << "³ÌĞòÓÃÊ±:" << ((tail - head) * 1000000.0 / freq) << "Î¢Ãë" << endl;
-    //°Ñ×îºóµÄÏûÔª×Ó×÷Îª½á¹ûĞ´ÈëÏûÔª½á¹ûÖĞ
+    cout << "ç¨‹åºç”¨æ—¶:" << ((tail - head) * 1000000.0 / freq) << "å¾®ç§’" << endl;
+    //æŠŠæœ€åçš„æ¶ˆå…ƒå­ä½œä¸ºç»“æœå†™å…¥æ¶ˆå…ƒç»“æœä¸­
     ofstream out;
-    out.open("ÏûÔª½á¹û2.txt", ios::trunc);
+    out.open("æ¶ˆå…ƒç»“æœ2.txt", ios::trunc);
     for (int i = 0; i < E_LineN; i++) {
         if (eline_ifnull(i))continue;
         string s;
