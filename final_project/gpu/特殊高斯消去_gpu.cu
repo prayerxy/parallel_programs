@@ -40,7 +40,7 @@ void init() {
             eliminer[i * (RN / 8 + 1) + j] = 0;
     }
 }
-
+//在当前消元子不为空，传入消元子下标i，GPU开始消元工作，每个线程得到整体的索引t_id，stride是所有线程数量，作为步长
 __global__ void eliminate1_kernel(char* eliminer, line* eline, int i) {
     int t_id = threadIdx.x + blockIdx.x * blockDim.x;
     int stride = blockDim.x * gridDim.x;
@@ -72,10 +72,11 @@ __global__ void eliminate1_kernel(char* eliminer, line* eline, int i) {
     }
 
 }
-
+//在当前消元子为空时，cpu首先完成升格操作，传入当前是否升格成功标志flagUpgrade
+//在成功升格后，需要gpu完成剩余的被消元行的消去工作，其中nextstart是开始的被消元行的下标
 __global__ void eliminate2_kernel(char* eliminer, line* eline, int i, int flagUpgrade, int nextstart) {
-    int t_id = threadIdx.x + blockIdx.x * blockDim.x;
-    int stride = blockDim.x * gridDim.x;
+    int t_id = threadIdx.x + blockIdx.x * blockDim.x;//全局索引
+    int stride = blockDim.x * gridDim.x;  //步长
     int newid = nextstart + 1;
     for (int j = newid + t_id; j < E_LineN; j += stride) {
         if (eline[j].num == i) {
@@ -185,12 +186,12 @@ int main() {
 
     for (int i = RN - 1; i >= 0; i--) {
         cudaDeviceSynchronize();
-        bool flag1 = (eliminer[i * (RN / 8 + 1) + i / 8] == 0) ? true : false;
+        bool flag1 = (eliminer[i * (RN / 8 + 1) + i / 8] == 0) ? true : false;//判断当前消元子是否为空
 
-        if (!flag1) {
+        if (!flag1) { //不为空时
             eliminate1_kernel << <128, 1024 >> > (eliminer, eline, i);
         }
-        else {
+        else {//为空时，需要cpu升格
             flagUpgrade = 0;
             nextstart = 0;
             for (int j = 0; j < E_LineN; j++) {
