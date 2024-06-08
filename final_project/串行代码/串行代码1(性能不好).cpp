@@ -92,6 +92,7 @@ void elimination() {
                         if (eliminer_ifnull(eline[j].num)) {
                             if (eline[j].num >= i - 4 && eline[j].num <= i)
                             {
+                                //不能提前升格，如果提前，那么下一轮就会提前用此消元子消元，但是这个消元子不该被用来消元
                                 for (int ss = eline[j].num / 8; ss >= 0; ss--)  //赋值过来
                                     eliminer[eline[j].num][ss] = eline[j].bit[ss];
                                 //eliminer[eline[j].num] ^= eline[j].bit;
