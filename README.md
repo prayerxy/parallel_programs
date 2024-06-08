@@ -77,11 +77,11 @@ C=AB
 
 划分子矩阵，每个进程负责C的一个子矩阵运算，注意分配任务与进程标号结合，使得每次子矩阵相乘用到的子矩阵不同，错开。
 
-<img src="C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608104536636.png" alt="image-20240608104536636" style="zoom:67%;" />
+<img src="./pictures/image-20240608104536636.png" style="zoom:67%;" />
 
 #### 通信与通信重叠
 
-<img src="C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608104616199.png" alt="image-20240608104616199" style="zoom:67%;" />
+<img src="./pictures/image-20240608104616199.png" alt="image-20240608104616199" style="zoom:67%;" />
 
 传递四个消息，可以把a做四次；但是不如c，c类似于流水线，每个进程传播多个消息，通信重叠度大
 
@@ -145,7 +145,7 @@ SYCL（Single-source C++ for Heterogeneous Computing）是一个开放标准，�
 
 ==DPC++==（Data Parallel C++）则是 Intel 在 SYCL 基础上的扩展，作为 ==oneAPI==的核心编程模型。
 
-<img src="C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608112212607.png" alt="image-20240608112212607" style="zoom: 80%;" />
+<img src="./pictures/image-20240608112212607.png" alt="image-20240608112212607" style="zoom: 80%;" />
 
 #### 1.SYCL缓冲方法
 
@@ -725,7 +725,7 @@ schedule子句确定如何在线程间划分循环
 - omp single
 - 任务并行：同时执行不同计算任务
   - 使用omp sections，下面定义一些omp section区域
-  - <img src="C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608201024796.png" alt="image-20240608201024796" style="zoom:67%;" />
+  - <img src="./pictures/image-20240608201024796.png" alt="image-20240608201024796" style="zoom:67%;" />
 - omp simd 自动simd向量化
 
 ## MPI
@@ -798,7 +798,7 @@ GPU擅长对于大量元素进行相同计算、众核，高并发
 - device：GPU端的代码
 - Kernel：从host调用，在device端运行的函数
 
-<img src="C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608204351786.png" alt="image-20240608204351786" style="zoom:67%;" />
+<img src="./pictures/image-20240608204351786.png" alt="image-20240608204351786" style="zoom:67%;" />
 
 - Thread工作模式
   - 所有线程执行相同的Kernel代码
@@ -806,7 +806,7 @@ GPU擅长对于大量元素进行相同计算、众核，高并发
   - 线程块：Block内线程协同计算，共享内存，原子操作，同步机制；但是Block之间不能协作
   - Block ids，Thread ids。
 
-![image-20240608204628697](C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608204628697.png)
+![image-20240608204628697](./pictures/image-20240608204628697.png)
 
 - Grid是一组线程块，共享全局内存中的数据，运行时动态调度
 
@@ -823,7 +823,7 @@ CUDA的内存层次介绍：
    - 读/写每Kernel共享的全局内存
 2. Host代码可以：
    - 在CPU主存与Device全局内存间传输数据
-   - <img src="C:/Users/%E5%8D%8E%E7%9B%96%E5%B0%86%E5%80%BE/AppData/Roaming/Typora/typora-user-images/image-20240608205054687.png" alt="image-20240608205054687" style="zoom:67%;" />
+   - <img src="./pictures/image-20240608205054687.png" alt="image-20240608205054687" style="zoom:67%;" />
    - 数据传输API：
      - cudaMemcpy：Host-Device内存数据传输
      - cudaMalloc在设备端创建数据缓冲区
